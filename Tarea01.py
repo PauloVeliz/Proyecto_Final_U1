@@ -127,6 +127,58 @@ def agregar_libro(data_libros:list[object]) -> list[object]:
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# OPCIÓN 4: Eliminar libro por ID.
+@mostrar_libros
+def eliminar_libro(data_libros:list[object]) -> list[object]:
+    texto_input = 'Ingrese el ID del libro a eliminar: '
+    id_libro = valida_int(texto_input)
+
+    for libro in data_libros:
+        if int(libro.id) == id_libro:
+            pos = data_libros.index(libro)
+            del data_libros[pos]
+            print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+            print(Fore.GREEN + '¡Libro eliminado exitosamente!' + Fore.RESET)
+            sleep(1.5)
+            os.system(so)
+            return data_libros
+    print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+    print(Fore.RED + 'El libro que desea eliminar no existe.' + Fore.RESET)
+    sleep(1.5)
+    os.system(so)
+    return data_libros
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 5: Buscar libro por ISBN o por título.
+@mostrar_libros
+def buscar_libro(data_libros:list[object]) -> list:
+    while True:
+        texto_input = 'Desea buscar por Título (1) o ISBN (2): '
+        opc_buscar = valida_int(texto_input)
+        if opc_buscar in [1,2]:
+            break
+    os.system(so)
+    if opc_buscar == 1:
+        texto_input = 'Ingrese Título del libro: '
+        libro_buscar = valida_vacios(texto_input).lower()
+        for libro in data_libros:
+            if libro.titulo.lower() == libro_buscar:
+                return [libro]
+    else:
+        texto_input = 'Ingrese ISBN del libro: '
+        libro_buscar = valida_vacios(texto_input).lower()
+        for libro in data_libros:
+            if libro.ISBN.lower() == libro_buscar:
+                return [libro]
+    print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+    print(Fore.RED + 'El libro buscado no existe.' + Fore.RESET)
+    sleep(1.5)
+    os.system(so)
+    return []
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Lista las Opciones que se pueden realizar en el sistema.
 def listar_opciones():
     Opciones = {1:'Leer archivo de disco duro.',
@@ -203,11 +255,12 @@ while inicio == True:
 
     # OPCIÓN 4: Eliminar libro.
     elif opcion == 4:
-        pass
+        listar_libros(data_libros)
+        eliminar_libro(data_libros)
 
     # OPCIÓN 5: Buscar libro por ISBN o por título.
     elif opcion == 5:
-        pass
+        buscar_libro(data_libros)
 
     # OPCIÓN 6: Ordenar libros por Títulos.
     elif opcion == 6:
