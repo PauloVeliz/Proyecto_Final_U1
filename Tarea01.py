@@ -355,3 +355,132 @@ def buscar_libro_op7(data_libros:list[object]) -> list:
     sleep(1.5)
     os.system(so)
     return sugerir_libros
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 8: Buscar libro por número de autores. Ingresar número, por ejemplo 2(hace referencia a dos autores)
+# y se deben listar todos los libros que contengan 2 autores.
+@mostrar_libros
+def buscar_libro_autores(data_libros:list[object]) -> list:
+    texto_nautor = 'Ingrese número de Autor(es): '
+    n_autores = valida_int(texto_nautor)
+    data_libros_autores = []
+    for libro in data_libros:
+        if len(libro.autor.split(" & ")) == n_autores:
+            data_libros_autores.append(libro)
+
+    if  data_libros_autores == []:
+        print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+        print (Fore.RED + f'No hay libros con {n_autores} autores.' + Fore.RESET)
+    sleep(1.5)
+    os.system(so)
+    return data_libros_autores
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 9: Editar o actualizar datos de un libro (título,género,ISBN,editorial y autores).
+@mostrar_libros
+def editar_libro(data_libros:list[object]) -> list[object]:
+    texto_input = 'Ingrese el ID del libro a editar: '
+    id_libro = valida_int(texto_input)
+    os.system(so)
+    pos = ''
+    for libro in data_libros:
+        if int(libro.id) == id_libro:
+            pos = data_libros.index(libro)
+            texto_input = 'Ingrese nuevo Título de libro: '
+            data_libros[pos].titulo = valida_vacios(texto_input).lower().title()
+            texto_input = 'Ingrese nuevo Género de libro: '
+            data_libros[pos].genero = valida_vacios(texto_input).lower().title()
+            texto_input = 'Ingrese nuevo ISBN de libro: '
+            data_libros[pos].ISBN = valida_vacios(texto_input).lower().upper()
+            texto_input = 'Ingrese nueva editorial de libro: '
+            data_libros[pos].editorial = valida_vacios(texto_input).lower().title()
+
+            texto_nautor = 'Ingrese número de Autor(es): '
+            n_autores = valida_int(texto_nautor)
+            if n_autores == 1:
+                texto_input = 'Ingrese nuevo Autor del libro: '
+                autor = valida_vacios(texto_input)
+            else:
+                autores = []
+                for i in range(n_autores):
+                    cada_autor = f'Ingrese el Autor {i+1}: '
+                    valor_cada_autor = valida_vacios(cada_autor)
+                    autores.append(valor_cada_autor)
+                autor = ' & '.join(autores).lower().title()
+
+            data_libros[pos].autor = autor
+            break      
+    print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+    if pos != '':
+        print (Fore.GREEN + f'Libro editado exitosamente.' + Fore.RESET)
+    else:
+        print (Fore.RED + f'No existe el libro con ID: {id_libro}.' + Fore.RESET)
+    sleep(1.5)       
+    os.system(so)
+    return data_libros
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 8: Buscar libro por número de autores. Ingresar número, por ejemplo 2(hace referencia a dos autores)
+# y se deben listar todos los libros que contengan 2 autores.
+@mostrar_libros
+def buscar_libro_autores(data_libros:list[object]) -> list:
+    texto_nautor = 'Ingrese número de Autor(es): '
+    n_autores = valida_int(texto_nautor)
+    data_libros_autores = []
+    for libro in data_libros:
+        if len(libro.autor.split(" & ")) == n_autores:
+            data_libros_autores.append(libro)
+
+    if  data_libros_autores == []:
+        print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+        print (Fore.RED + f'No hay libros con {n_autores} autores.' + Fore.RESET)
+    sleep(1.5)
+    os.system(so)
+    return data_libros_autores
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 9: Editar o actualizar datos de un libro (título,género,ISBN,editorial y autores).
+@mostrar_libros
+def editar_libro(data_libros:list[object]) -> list[object]:
+    texto_input = 'Ingrese el ID del libro a editar: '
+    id_libro = valida_int(texto_input)
+    os.system(so)
+    pos = ''
+    for libro in data_libros:
+        if int(libro.id) == id_libro:
+            pos = data_libros.index(libro)
+            texto_input = 'Ingrese nuevo Título de libro: '
+            data_libros[pos].titulo = valida_vacios(texto_input).lower().title()
+            texto_input = 'Ingrese nuevo Género de libro: '
+            data_libros[pos].genero = valida_vacios(texto_input).lower().title()
+            texto_input = 'Ingrese nuevo ISBN de libro: '
+            data_libros[pos].ISBN = valida_vacios(texto_input).lower().upper()
+            texto_input = 'Ingrese nueva editorial de libro: '
+            data_libros[pos].editorial = valida_vacios(texto_input).lower().title()
+
+            texto_nautor = 'Ingrese número de Autor(es): '
+            n_autores = valida_int(texto_nautor)
+            if n_autores == 1:
+                texto_input = 'Ingrese nuevo Autor del libro: '
+                autor = valida_vacios(texto_input)
+            else:
+                autores = []
+                for i in range(n_autores):
+                    cada_autor = f'Ingrese el Autor {i+1}: '
+                    valor_cada_autor = valida_vacios(cada_autor)
+                    autores.append(valor_cada_autor)
+                autor = ' & '.join(autores).lower().title()
+
+            data_libros[pos].autor = autor
+            break      
+    print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+    if pos != '':
+        print (Fore.GREEN + f'Libro editado exitosamente.' + Fore.RESET)
+    else:
+        print (Fore.RED + f'No existe el libro con ID: {id_libro}.' + Fore.RESET)
+    sleep(1.5)       
+    os.system(so)
+    return data_libros
