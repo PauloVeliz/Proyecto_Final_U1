@@ -84,6 +84,49 @@ def carga_3libros(data_libros:list[object]) -> list[object]:
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# OPCIÓN 2: Lista los libros de acuerdo y muestra según la función decoradora mostrar_libros
+@mostrar_libros
+def listar_libros(data_libros:list[object]) -> list[object]:
+    libros_listar = data_libros[:]
+    return libros_listar
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 3: Agrega un libro.
+@mostrar_libros
+def agregar_libro(data_libros:list[object]) -> list[object]:
+    libro = {'ID':'','Titulo':'','Genero':'','ISBN':'','Editorial':'','Autor(es)':''}
+    for key in libro:
+        texto_input = f'Ingrese el {key} del libro: '
+        if key == 'ID':
+            valor = str(valida_int(texto_input))
+        else:
+            if key ==  'Autor(es)':
+                texto_nautor = 'Ingrese número de Autor(es): '
+                n_autores = valida_int(texto_nautor)
+                if n_autores == 1:
+                    valor = valida_vacios(texto_input).lower().title()
+                else:
+                    autores = []
+                    for i in range(n_autores):
+                        cada_autor = f'Ingrese el Autor {i+1}: '
+                        valor_cada_autor = valida_vacios(cada_autor)
+                        autores.append(valor_cada_autor)
+                    valor = ' & '.join(autores).lower().title()
+            else:
+                valor = valida_vacios(texto_input).lower().title()
+
+        libro[key] = valor
+    libro_agregar = Libro(libro['ID'],libro['Titulo'],libro['Genero'],libro['ISBN'],libro['Editorial'],libro['Autor(es)'])
+    data_libros.append(libro_agregar)
+    print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+    print (Fore.GREEN + '!Se guardó el libro exitosamente!' + Fore.RESET)
+    sleep(1.5)
+    os.system(so)
+    return data_libros
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Lista las Opciones que se pueden realizar en el sistema.
 def listar_opciones():
     Opciones = {1:'Leer archivo de disco duro.',
@@ -152,11 +195,11 @@ while inicio == True:
 
     # OPCIÓN 2: Listar libros.
     elif opcion == 2:
-        pass
+        listar_libros(data_libros)
 
     # OPCIÓN 3: Agrega un libro.
     elif opcion == 3:
-        pass
+        agregar_libro(data_libros)
 
     # OPCIÓN 4: Eliminar libro.
     elif opcion == 4:
