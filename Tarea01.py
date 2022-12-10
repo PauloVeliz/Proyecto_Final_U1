@@ -390,21 +390,22 @@ while inicio == True:
     elif opcion == 5:
         buscar_libro(data_libros)
 
-    # OPCIÓN 6: Ordenar libros por Títulos.
+ # OPCIÓN 6: Ordenar libros por Títulos.
     elif opcion == 6:
-        pass
+        ordenar_libro(data_libros)
     
     # OPCIÓN 7: Buscar libros por autor, editorial o género.
     elif opcion == 7:
-        pass
+        buscar_libro_op7(data_libros)
 
     # OPCIÓN 8: Buscar libro por número de autores.
     elif opcion == 8:
-        pass
+        buscar_libro_autores(data_libros)
 
     # OPCIÓN 9: Editar datos de un libro.
     elif opcion == 9:
-        pass
+        listar_libros(data_libros)
+        editar_libro(data_libros)
 
     # OPCIÓN 10: Guardar libros en disco duro.
     else:
