@@ -293,3 +293,65 @@ while inicio == True:
         inicio = False
     else:
         inicio = True
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 6: Ordenar libros por Títulos.
+@mostrar_libros
+def ordenar_libro(data_libros:list[object]) -> list[object]:
+    Titulos_libros = [libro.titulo for libro in data_libros]
+    Titulos_Ordenados = sorted(Titulos_libros)
+    data_libros_orden = []
+
+    for ind in range(len(data_libros)):
+        pos = Titulos_libros.index(Titulos_Ordenados[ind])
+        data_libros_orden.append(data_libros[pos])
+    return data_libros_orden
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OPCIÓN 7: Buscar libros por autor, editorial o género. Sugerir opciones y listar resultados.
+@mostrar_libros
+def buscar_libro_op7(data_libros:list[object]) -> list:
+    while True:
+        texto_input = 'Desea buscar por Autor(es) (1), Editorial (2) o Género (3): '
+        opc_buscar = valida_int(texto_input)
+        if opc_buscar in [1,2,3]:
+            break
+    os.system(so)
+    sugerir_libros = []
+    if opc_buscar == 1:
+        texto_nautor = 'Ingrese número de Autor(es): '
+        n_autores = valida_int(texto_nautor)
+        if n_autores == 1:
+            texto_input = 'Ingrese el Autor del libro: '
+            autor = valida_vacios(texto_input).lower()
+        else:
+            autores = []
+            for i in range(n_autores):
+                cada_autor = f'Ingrese el Autor {i+1}: '
+                valor_cada_autor = valida_vacios(cada_autor)
+                autores.append(valor_cada_autor)
+            autor = ' & '.join(autores).lower()
+
+        for libro in data_libros:
+            if libro.autor.lower() == autor:
+                sugerir_libros.append(libro)
+    elif opc_buscar == 2:
+        texto_input = 'Ingrese Editorial del libro: '
+        edito = valida_vacios(texto_input).lower()
+        for libro in data_libros:
+            if libro.editorial.lower() == edito:
+                sugerir_libros.append(libro)
+    else:
+        texto_input = 'Ingrese Género del libro: '
+        genero = valida_vacios(texto_input).lower()
+        for libro in data_libros:
+            if libro.genero.lower() == genero:
+                sugerir_libros.append(libro)
+    if sugerir_libros == []:
+        print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+        print(Fore.RED + 'El libro buscado no existe.' + Fore.RESET)
+    sleep(1.5)
+    os.system(so)
+    return sugerir_libros
