@@ -307,6 +307,32 @@ def editar_libro(data_libros:list[object]) -> list[object]:
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# OPCIÓN 10: Guardar libros en archivo de disco duro (.txt o csv).
+@mostrar_libros
+def guardar_libros(data_libros:list[object]) -> list:
+    data_libros_dict = []
+
+    for libro in data_libros:
+        libro_dict = {}
+        libro_dict['ID'] = libro.id
+        libro_dict['Titulo'] = libro.titulo
+        libro_dict['Genero'] = libro.genero
+        libro_dict['ISBN'] = libro.ISBN
+        libro_dict['Editorial'] = libro.editorial
+        libro_dict['Autor(es)'] = libro.autor
+
+        data_libros_dict.append(libro_dict)
+
+    with open('libros.csv', 'w', newline='') as f_libros:
+        field_names = ['ID', 'Titulo', 'Genero','ISBN','Editorial','Autor(es)']
+        writer = csv.DictWriter(f_libros, fieldnames=field_names)
+        writer.writeheader()
+        writer.writerows(data_libros_dict)
+    
+    return []
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Lista las Opciones que se pueden realizar en el sistema.
 def listar_opciones():
     Opciones = {1:'Leer archivo de disco duro.',
@@ -326,7 +352,6 @@ def listar_opciones():
         print(Fore.GREEN + f'{key}: {Opciones[key]}' + Fore.RESET)
 
     print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
-
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------
 accion = ''
@@ -390,7 +415,7 @@ while inicio == True:
     elif opcion == 5:
         buscar_libro(data_libros)
 
- # OPCIÓN 6: Ordenar libros por Títulos.
+    # OPCIÓN 6: Ordenar libros por Títulos.
     elif opcion == 6:
         ordenar_libro(data_libros)
     
@@ -409,8 +434,14 @@ while inicio == True:
 
     # OPCIÓN 10: Guardar libros en disco duro.
     else:
-        pass
+        guardar_libros(data_libros)
+        print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
+        print (Fore.GREEN + '!Se guardaron los libros exitosamente!' + Fore.RESET)
     
+
+    # Guarda Actualizaciones de Data de Libros
+    if opcion in [3,4,9]:
+        guardar_libros(data_libros)
 
     print(Fore.YELLOW + '------------------------------------------------------------' + Fore.RESET)
     texto_input = f'¿{nombre}, deseas continuar? (Sí/No): '
@@ -422,4 +453,3 @@ while inicio == True:
         inicio = False
     else:
         inicio = True
-
